@@ -1,27 +1,34 @@
 ﻿# Offensive Security Intro
 
-* **Learning Path:** Pre-Security
-* **Module:** 01-Introduction-to-Cyber-Security
-* **Status:** ⏳ In Progress
+- **Path:** Pre-Security
+- **Module:** Introduction to Cyber Security
+- **Status:** ⏳ Not started
 
 ---
 
-## 📝 Overview & Key Concepts
-[Notes on core principles, definitions, and concepts introduced in this room]
+## What this room is about
+Quick summary of what this room covers and why it matters in cybersecurity.
 
 ---
 
-## 💻 Practical Exercises & Commands
-`ash
-# Commands executed during the lab
-`
+## Key concepts & notes
+Notes I took while reading through the room material and understanding the concepts.
 
 ---
 
-## 🚩 Findings & Answers
-* Question / Task: [Notes or findings]
+## Commands & steps I used
+Commands I ran in the terminal or AttackBox during the lab:
+```bash
+# commands will go here
+```
 
 ---
 
-## 💡 Key Takeaways
-* [Main takeaway or lesson learned]
+## Questions & answers
+Notes on how I solved each task, what to look for, and key findings:
+* **Task X:** [NEEDS DETAILS]
+
+---
+
+## My takeaways
+What I learned from this lab and things I want to remember for future rooms.

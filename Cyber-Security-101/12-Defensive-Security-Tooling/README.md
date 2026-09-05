@@ -1,14 +1,13 @@
-﻿# 12-Defensive-Security-Tooling
+﻿# Defensive Security Tooling
 
-Module part of the **Cyber Security 101** learning path on TryHackMe.
+My notes and completed rooms for the **Defensive Security Tooling** section in TryHackMe's Cyber Security 101 path.
 
-## Rooms in this Module
-
-* [CyberChef-The-Basics](./CyberChef-The-Basics/README.md)
-* [CAPA-The-Basics](./CAPA-The-Basics/README.md)
-* [REMnux-Getting-Started](./REMnux-Getting-Started/README.md)
-* [FlareVM-Arsenal-of-Tools](./FlareVM-Arsenal-of-Tools/README.md)
+## Rooms in this module
+* [ ] [CyberChef The Basics](./CyberChef-The-Basics/README.md)
+* [ ] [CAPA The Basics](./CAPA-The-Basics/README.md)
+* [ ] [REMnux Getting Started](./REMnux-Getting-Started/README.md)
+* [ ] [FlareVM Arsenal of Tools](./FlareVM-Arsenal-of-Tools/README.md)
 
 ---
-[⬅️ Back to Cyber Security 101](../README.md)
+[Back to Cyber Security 101](../README.md)
 
