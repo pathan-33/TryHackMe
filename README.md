@@ -3,7 +3,7 @@
 Welcome to my **TryHackMe (THM)** walkthroughs, notes, and cybersecurity learning portfolio. This repository documents my hands-on practice, room write-ups, vulnerability analyses, and custom scripts.
 
 [![TryHackMe](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme)](https://tryhackme.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github)](https://github.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github)](https://github.com/pathan-33)
 [![Medium](https://img.shields.io/badge/Medium-Articles-000000?style=for-the-badge&logo=medium)](https://medium.com/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/)
 
