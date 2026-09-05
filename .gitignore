@@ -1,0 +1,38 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Sensitive & VPN Configuration Files
+*.ovpn
+*.key
+*.crt
+*.pem
+id_rsa
+id_rsa.pub
+
+# Large Wordlists & Dumps (Keep your repo lightweight)
+*.txt.gz
+*.tar.gz
+*.zip
+*.7z
+*.iso
+*.vmdk
+*.vdi
+wordlists/
+rockyou.txt
+
+# Python & Environment Files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.env
+
+# Editor / IDE artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
