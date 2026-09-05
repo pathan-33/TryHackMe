@@ -11,7 +11,7 @@ This repository contains my personal notes, practical exercises, commands, findi
 * [Pre Security](./Pre-Security/)
 * [Cyber Security 101](./Cyber-Security-101/)
 * [Security Analyst Level 1](./Security-Analyst-Level-1/)
-* [Junior Penetration Tester](./Junior-Penetration-Tester/)
+* [Junior Penetration Tester](./Jr-Penetration-Tester/)
 * [Web App Pentester Level 1](./Web-App-Pentester-Level-1/)
 * [Web Application Red Teaming](./Web-Application-Red-Teaming/)
 * [Red Teaming](./Red-Teaming/)
