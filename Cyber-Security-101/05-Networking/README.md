@@ -1,9 +1,9 @@
-﻿# Networking
+# Networking
 
 My notes and completed rooms for the **Networking** section in TryHackMe's Cyber Security 101 path.
 
 ## Rooms in this module
-* [ ] [Networking Concepts](./Networking-Concepts/README.md)
+* [x] [Networking Concepts](./Networking-Concepts/README.md)
 * [ ] [Networking Essentials](./Networking-Essentials/README.md)
 * [ ] [Networking Core Protocols](./Networking-Core-Protocols/README.md)
 * [ ] [Networking Secure Protocols](./Networking-Secure-Protocols/README.md)

@@ -30,7 +30,7 @@ My goal here is to get comfortable with both offensive techniques (like basic re
 * [ ] [Linux Shells](./04-Command-Line/Linux-Shells/README.md)
 
 ### 5. [Networking](./05-Networking/README.md)
-* [ ] [Networking Concepts](./05-Networking/Networking-Concepts/README.md)
+* [x] [Networking Concepts](./05-Networking/Networking-Concepts/README.md)
 * [ ] [Networking Essentials](./05-Networking/Networking-Essentials/README.md)
 * [ ] [Networking Core Protocols](./05-Networking/Networking-Core-Protocols/README.md)
 * [ ] [Networking Secure Protocols](./05-Networking/Networking-Secure-Protocols/README.md)
