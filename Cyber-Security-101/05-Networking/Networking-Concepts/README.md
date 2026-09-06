@@ -1,114 +1,145 @@
-# Networking Concepts
+# Networking Concepts — Lab Notes & Walkthrough
 
-- **Path:** Cyber Security 101
-- **Module:** Networking
-- **Status:** ✅ Completed
-- **Room Link:** [Networking Concepts on TryHackMe](https://tryhackme.com/room/networkingconcepts)
-
----
-
-## What this room is about
-This room covers core computer networking models and communication protocols:
-* The 7-layer ISO OSI model vs. the 4-layer TCP/IP model.
-* IPv4 addressing structure, CIDR notation, and private vs. public address spaces.
-* Connectionless (UDP) vs. connection-oriented (TCP) transport mechanisms.
-* Data encapsulation and the life of a network packet.
-* Interacting directly with TCP services using Telnet.
+* **Room:** [Networking Concepts](https://tryhackme.com/room/networkingconcepts)
+* **Path:** Cyber Security 101
+* **Module:** 05-Networking
+* **Status:** ✅ Completed
 
 ---
 
-## Key concepts & notes
+## 🎯 Lab Overview
+This lab covers how data actually moves across networks and provides hands-on practice interacting directly with open TCP ports from the command line using `telnet`. 
 
-### 1. The OSI 7-Layer Model
-Remembered from bottom to top using *"Please Do Not Throw Spinach Pizza Away"*:
-* **Layer 7 - Application:** Provides services directly to software (`HTTP`, `DNS`, `SSH`, `FTP`).
-* **Layer 6 - Presentation:** Handles data formatting, encryption, and compression (`SSL/TLS`, `ASCII`, `JPEG`).
-* **Layer 5 - Session:** Manages sessions and connections between apps (`RPC`, `NFS`).
-* **Layer 4 - Transport:** Manages host-to-host delivery, ports, and reliability (`TCP`, `UDP`).
-* **Layer 3 - Network:** Logical addressing and routing across different networks (`IP`, `ICMP`).
-* **Layer 2 - Data Link:** Node-to-node transfer on the same local segment (`MAC addresses`, `Ethernet 802.3`, `WiFi 802.11`). MAC address is 6 bytes long; the first 3 bytes identify the vendor.
-* **Layer 1 - Physical:** Physical transmission media (copper cables, optical fiber, radio frequencies).
+Instead of relying on high-level tools or browsers that hide the underlying mechanics, this room demonstrates:
+1. How the **OSI (7-layer)** and **TCP/IP (4-layer)** models structure network communication.
+2. How IPv4 addressing, private subnets (RFC 1918), and routing function.
+3. How the **TCP 3-Way Handshake** establishes reliable connections compared to UDP.
+4. **Hands-on Lab:** Connecting to raw TCP ports (7, 13, and 80) and manually crafting an HTTP GET request to retrieve the hidden flag.
 
-### 2. TCP/IP Model (DoD)
-Developed in the 1970s for resilience against network link failures. Simplifies the OSI model into 4 layers:
-* **Application Layer:** Merges OSI layers 5, 6, and 7.
-* **Transport Layer:** OSI layer 4 (`TCP`, `UDP`).
-* **Internet Layer:** OSI layer 3 (`IP`, `ICMP`).
-* **Link Layer:** Merges OSI layers 1 and 2.
+---
 
-### 3. IPv4 & Private IP Ranges (RFC 1918)
-IPv4 addresses are 32 bits (4 octets, 0–255). Private address ranges cannot be routed across the public internet without NAT:
+## 🧠 Core Theory & Reference Notes
+
+### 1. OSI vs. TCP/IP Architecture
+The OSI model provides the theoretical 7-layer framework, while TCP/IP is the practical 4-layer model implemented across the Internet:
+
+| OSI Layer | TCP/IP Layer | Key Protocols & Identifiers | Function |
+| :--- | :--- | :--- | :--- |
+| **7. Application**<br>**6. Presentation**<br>**5. Session** | **Application** | `HTTP`, `HTTPS`, `SSH`, `DNS`, `FTP`, `Telnet` | Delivers network services directly to end-user applications. |
+| **4. Transport** | **Transport** | `TCP`, `UDP` (Ports `1`–`65535`) | End-to-end communication between specific processes. |
+| **3. Network** | **Internet** | `IPv4`, `IPv6`, `ICMP`, `IPSec` | Logical addressing and packet routing across networks. |
+| **2. Data Link**<br>**1. Physical** | **Link** | `Ethernet (802.3)`, `Wi-Fi (802.11)`, MAC addresses | Physical transmission & frame delivery on the same local segment. |
+
+* **MAC Address (Layer 2):** 6 bytes (48 bits). The first 3 bytes represent the vendor/manufacturer.
+* **IPv4 Address (Layer 3):** 32 bits (4 octets, 0–255). Roughly 4.3 billion theoretical addresses.
+
+---
+
+### 2. Private IP Ranges (RFC 1918)
+Private IP ranges cannot be routed across the public internet without Network Address Translation (NAT):
 * `10.0.0.0/8` (10.0.0.0 – 10.255.255.255)
 * `172.16.0.0/12` (172.16.0.0 – 172.31.255.255)
 * `192.168.0.0/16` (192.168.0.0 – 192.168.255.255)
 
-Subnet mask `/24` (`255.255.255.0`) means the first 24 bits represent the network:
-* `X.X.X.0` = Network Address
-* `X.X.X.255` = Broadcast Address
-* `X.X.X.1` to `X.X.X.254` = Usable host addresses (254 hosts)
+---
 
-### 4. Transport Protocols & The TCP 3-Way Handshake
-* **UDP:** Connectionless, fast, no delivery confirmation or packet ordering (DNS, VoIP, video streaming).
-* **TCP:** Connection-oriented, reliable, guarantees packet delivery using sequence numbers and ACKs.
-* **TCP 3-Way Handshake:**
-  1. `SYN` (Client $\rightarrow$ Server)
-  2. `SYN-ACK` (Server $\rightarrow$ Client)
-  3. `ACK` (Client $\rightarrow$ Server)
-* **Port Range:** Ports `1` through `65535` (16 bits). Port `0` is reserved.
-
-### 5. Encapsulation & Protocol Data Units (PDUs)
-* Data moves down the stack: **Data** (App) $\rightarrow$ **Segment/Datagram** (Transport) $\rightarrow$ **Packet** (Network) $\rightarrow$ **Frame** (Data Link) $\rightarrow$ **Bits** (Physical).
-* Decapsulation strips headers in reverse order on arrival.
+### 3. TCP vs. UDP & The 3-Way Handshake
+* **UDP:** Connectionless, no delivery guarantees, low overhead (DNS queries, live video streaming, VoIP).
+* **TCP:** Connection-oriented, guarantees packet arrival and ordering using sequence and acknowledgement numbers.
+* **TCP Handshake:**
+  1. `SYN` — Client initiates and sends initial sequence number.
+  2. `SYN-ACK` — Server acknowledges client's sequence number and sends its own.
+  3. `ACK` — Client confirms receipt; connection is established.
 
 ---
 
-## Commands & steps I used
+### 4. Encapsulation & Protocol Data Units (PDUs)
+As data travels down the protocol stack, each layer wraps the payload with its own header:
+$$\text{Data} \xrightarrow{\text{Transport}} \text{Segment (TCP) / Datagram (UDP)} \xrightarrow{\text{Network}} \text{Packet (IP)} \xrightarrow{\text{Link}} \text{Frame (MAC)} \xrightarrow{\text{Physical}} \text{Bits}$$
 
-### Checking local IP configuration
+---
+
+## 🛠️ Hands-on Lab: Interacting with Services via Telnet
+
+In this practical exercise, I used `telnet` on the AttackBox to connect directly to various listening TCP ports on the target machine (`10.49.166.247`).
+
+### Task A: Testing the Echo Service (Port 7)
+The echo service simply repeats back any text sent to it:
 ```bash
-# Linux
-ip a s
-# or
-ifconfig
+telnet 10.49.166.247 7
+```
+* Entered: `Hi` $\rightarrow$ Server echoed: `Hi`
+* Escape character: `Ctrl + ]`, then typed `quit` to close connection.
 
-# Windows
-ipconfig
+---
+
+### Task B: Testing the Daytime Service (Port 13)
+The daytime service returns the server's current timestamp and immediately terminates the connection:
+```bash
+telnet 10.49.166.247 13
+```
+* Server response: `Thu Jun 20 12:36:32 PM UTC 2024`
+
+---
+
+### Task C: Interacting with the Web Server & Capturing the Flag (Port 80)
+Instead of using a web browser, I connected directly to TCP Port 80 to manually issue a raw HTTP GET request.
+
+```bash
+root@ip-10-49-95-83:~# telnet 10.49.166.247 80
+Trying 10.49.166.247...
+Connected to 10.49.166.247.
+Escape character is '^]'.
 ```
 
-### Banner Grabbing & Service Interaction via Telnet
-```bash
-# Connecting to Echo service (Port 7)
-telnet <TARGET_IP> 7
-
-# Connecting to Daytime service (Port 13)
-telnet <TARGET_IP> 13
-
-# Connecting to HTTP Web Server (Port 80)
-telnet <TARGET_IP> 80
-```
-
-Once connected to port 80, manually sent the raw HTTP GET request:
+Once the connection was established, I manually typed the raw HTTP/1.1 request headers:
 ```http
 GET / HTTP/1.1
 Host: tryhackme.com
 [Enter]
 [Enter]
 ```
+*(Hitting Enter twice sends the required blank line that terminates the HTTP request header block)*.
 
-Server returned HTTP response headers and body containing the flag:
+#### Server Response & Flag Capture:
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html
+ETag: "2920831920"
+Last-Modified: Thu, 20 Jun 2024 12:39:38 GMT
+Content-Length: 20
+Accept-Ranges: bytes
+Date: Sun, 06 Sep 2026 03:25:02 GMT
+Server: lighttpd/1.4.63
+
+THM{TELNET_MASTER}
+Connection closed by foreign host.
+```
+
+* **Captured Flag:** `THM{TELNET_MASTER}`
 * **Server Banner:** `lighttpd/1.4.63`
-* **HTTP Status:** `200 OK`
+* **Status Code:** `200 OK`
 
 ---
 
-## Questions & answers
-* **MAC address size:** 6 bytes (first 3 bytes identify the vendor)
-* **IPv4 address size:** 32 bits (4 octets)
-* **TCP Handshake packets:** 3 packets (SYN, SYN-ACK, ACK)
-* **Flag captured on Port 80:** `THM{TELNET_MASTER}`
+## 🚩 Questions & Lab Answers
+
+| Question / Topic | Answer / Finding |
+| :--- | :--- |
+| How many bytes in a standard MAC address? | `6` bytes (first 3 bytes identify the vendor) |
+| How many bits in an IPv4 address? | `32` bits |
+| How many packets in the TCP handshake? | `3` packets (`SYN`, `SYN-ACK`, `ACK`) |
+| Valid TCP/UDP port number range? | `1` to `65535` |
+| What flag is found on the port 80 web server? | `THM{TELNET_MASTER}` |
 
 ---
 
-## My takeaways
-* Telnet communicates entirely in plaintext—credentials and data can easily be captured over the wire using Wireshark. It is no longer suitable for administrative access and was replaced by SSH.
-* However, `telnet` (and `netcat`) remains a valuable testing utility for quick manual banner grabbing and validating whether a TCP port responds before using heavier tools.
+## 🔒 Security Analysis & Pentesting Takeaways
+
+1. **The Insecurity of Telnet:**
+   * Telnet transmits all data—including authentication credentials and session tokens—in cleartext. Anyone on the local network running a packet sniffer like Wireshark or performing an ARP spoofing attack can intercept credentials.
+   * In modern environments, Telnet has been entirely replaced by **SSH (Secure Shell, Port 22)**, which encrypts the entire session.
+
+2. **Manual Banner Grabbing in Reconnaissance:**
+   * Connecting directly to open ports with `telnet` or `nc` (Netcat) is an essential reconnaissance technique. 
+   * As seen above, connecting to port 80 immediately disclosed the server version: `lighttpd/1.4.63`. As a penetration tester, identifying the exact server software and version allows you to search exploit databases (Exploit-DB, CVEs) for known vulnerabilities affecting that release.
