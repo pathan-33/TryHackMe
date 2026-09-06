@@ -26,7 +26,7 @@ The OSI model provides the theoretical 7-layer framework, while TCP/IP is the pr
 | OSI Layer | TCP/IP Layer | Key Protocols & Identifiers | Function |
 | :--- | :--- | :--- | :--- |
 | **7. Application**<br>**6. Presentation**<br>**5. Session** | **Application** | `HTTP`, `HTTPS`, `SSH`, `DNS`, `FTP`, `Telnet` | Delivers network services directly to end-user applications. |
-| **4. Transport** | **Transport** | `TCP`, `UDP` (Ports `1`–`65535`) | End-to-end communication between specific processes. |
+| **4. Transport** | **Transport** | `TCP`, `UDP` (Ports `0`–`65535`) | End-to-end communication between specific processes. |
 | **3. Network** | **Internet** | `IPv4`, `IPv6`, `ICMP`, `IPSec` | Logical addressing and packet routing across networks. |
 | **2. Data Link**<br>**1. Physical** | **Link** | `Ethernet (802.3)`, `Wi-Fi (802.11)`, MAC addresses | Physical transmission & frame delivery on the same local segment. |
 
@@ -61,12 +61,12 @@ $$\text{Data} \xrightarrow{\text{Transport}} \text{Segment (TCP) / Datagram (UDP
 
 ## 🛠️ Hands-on Lab: Interacting with Services via Telnet
 
-In this practical exercise, I used `telnet` on the AttackBox to connect directly to various listening TCP ports on the target machine (`10.49.166.247`).
+In this practical exercise, I used `telnet` on the AttackBox to connect directly to various listening TCP ports on the target machine (`MACHINE_IP`).
 
 ### Task A: Testing the Echo Service (Port 7)
 The echo service simply repeats back any text sent to it:
 ```bash
-telnet 10.49.166.247 7
+telnet MACHINE_IP 7
 ```
 * Entered: `Hi` $\rightarrow$ Server echoed: `Hi`
 * Escape character: `Ctrl + ]`, then typed `quit` to close connection.
@@ -76,7 +76,7 @@ telnet 10.49.166.247 7
 ### Task B: Testing the Daytime Service (Port 13)
 The daytime service returns the server's current timestamp and immediately terminates the connection:
 ```bash
-telnet 10.49.166.247 13
+telnet MACHINE_IP 13
 ```
 * Server response: `Thu Jun 20 12:36:32 PM UTC 2024`
 
@@ -86,9 +86,9 @@ telnet 10.49.166.247 13
 Instead of using a web browser, I connected directly to TCP Port 80 to manually issue a raw HTTP GET request.
 
 ```bash
-root@ip-10-49-95-83:~# telnet 10.49.166.247 80
-Trying 10.49.166.247...
-Connected to 10.49.166.247.
+root@ip-10-49-95-83:~# telnet MACHINE_IP 80
+Trying MACHINE_IP...
+Connected to MACHINE_IP.
 Escape character is '^]'.
 ```
 
@@ -112,11 +112,11 @@ Accept-Ranges: bytes
 Date: Sun, 06 Sep 2026 03:25:02 GMT
 Server: lighttpd/1.4.63
 
-THM{TELNET_MASTER}
+THM{TELNET_******}
 Connection closed by foreign host.
 ```
 
-* **Captured Flag:** `THM{TELNET_MASTER}`
+* **Captured Flag:** `THM{TELNET_******}` (Masked per ethics guidelines)
 * **Server Banner:** `lighttpd/1.4.63`
 * **Status Code:** `200 OK`
 
@@ -129,8 +129,8 @@ Connection closed by foreign host.
 | How many bytes in a standard MAC address? | `6` bytes (first 3 bytes identify the vendor) |
 | How many bits in an IPv4 address? | `32` bits |
 | How many packets in the TCP handshake? | `3` packets (`SYN`, `SYN-ACK`, `ACK`) |
-| Valid TCP/UDP port number range? | `1` to `65535` |
-| What flag is found on the port 80 web server? | `THM{TELNET_MASTER}` |
+| Valid TCP/UDP port number range? | `0` to `65535` |
+| What flag is found on the port 80 web server? | Retrieved via Telnet HTTP GET request (`THM{...}`) |
 
 ---
 
